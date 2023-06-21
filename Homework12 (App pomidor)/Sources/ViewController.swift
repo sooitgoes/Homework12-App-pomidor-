@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         timerLabel.text = "\(durationTimer):00"
         timerLabel.font = .systemFont(ofSize: 70, weight: .light)
         timerLabel.textAlignment = .center
-        timerLabel.textColor = .white
+        timerLabel.textColor = .systemRed
         timerLabel.translatesAutoresizingMaskIntoConstraints = false
         return timerLabel
     }()
@@ -28,7 +28,9 @@ class ViewController: UIViewController {
     private lazy var playOrPause: UIButton = {
         let playOrPause = UIButton()
         let playIcon = UIImage(named: "playRed")
+
         playOrPause.setImage(playIcon, for: .normal)
+        playOrPause.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         playOrPause.translatesAutoresizingMaskIntoConstraints = false
         return playOrPause
     }()
@@ -66,21 +68,51 @@ class ViewController: UIViewController {
     @objc private func buttonPressed() {
         switch (isStart, isWork) {
         case (false, true):
-            timer = .scheduledTimer(timeInterval: 1, target: self, selector: <#T##Selector#>, userInfo: nil, repeats: true)
-            playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
+            timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(workTimerAction), userInfo: nil, repeats: true)
+            playOrPause.setImage(UIImage(named: "pauseRed"), for: .normal)
             isStart = true
         case (false, false):
-            timer = .scheduledTimer(timeInterval: 1, target: self, selector: <#T##Selector#>, userInfo: nil, repeats: true)
-            playOrPause.setImage(UIImage(named: "pauseRed"), for: .normal)
+            timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(restTimerAction), userInfo: nil, repeats: true)
+            playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
             isStart = true
         default:
             timer.invalidate()
-            playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
+            isWork == true
+            ? playOrPause.setImage(UIImage(named: "playRed"), for: .normal)
+            : playOrPause.setImage(UIImage(named: "playGreen"), for: .normal)
             isStart = false
         }
-
     }
 
+    // Варианты действия таймера, для режима работы или отдыха.
+    @objc func workTimerAction() {
+        durationTimer -= 1
+        timerLabel.text = "\(durationTimer):00"
 
+        if durationTimer == 0 {
+            timer.invalidate()
+            durationTimer = 10
+            timerLabel.text = "\(durationTimer):00"
+            timerLabel.textColor = .systemGreen
+            playOrPause.setImage(UIImage(named: "playGreen"), for: .normal)
+            isStart = false
+            isWork = false
+        }
+    }
+
+    @objc func restTimerAction() {
+        durationTimer -= 1
+        timerLabel.text = "\(durationTimer):00"
+
+        if durationTimer == 0 {
+            timer.invalidate()
+            durationTimer = 25
+            timerLabel.text = "\(durationTimer):00"
+            timerLabel.textColor = .systemRed
+            playOrPause.setImage(UIImage(named: "playRed"), for: .normal)
+            isStart = false
+            isWork = true
+        }
+    }
 }
 
