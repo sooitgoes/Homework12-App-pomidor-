@@ -56,15 +56,39 @@
 		D1620CBA2A435BEA001D4F75 /* Homework12 (App pomidor) */ = {
 			isa = PBXGroup;
 			children = (
-				D1620CBB2A435BEA001D4F75 /* AppDelegate.swift */,
-				D1620CBD2A435BEA001D4F75 /* SceneDelegate.swift */,
-				D1620CBF2A435BEA001D4F75 /* ViewController.swift */,
-				D1620CC12A435BEA001D4F75 /* Main.storyboard */,
-				D1620CC42A435BEB001D4F75 /* Assets.xcassets */,
-				D1620CC62A435BEB001D4F75 /* LaunchScreen.storyboard */,
-				D1620CC92A435BEB001D4F75 /* Info.plist */,
+				D1620CD12A435E2C001D4F75 /* Sources */,
+				D1620CD02A435E1E001D4F75 /* App */,
+				D1620CCF2A435E06001D4F75 /* Resources */,
 			);
 			path = "Homework12 (App pomidor)";
+			sourceTree = "<group>";
+		};
+		D1620CCF2A435E06001D4F75 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D1620CC42A435BEB001D4F75 /* Assets.xcassets */,
+				D1620CC92A435BEB001D4F75 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D1620CD02A435E1E001D4F75 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D1620CBB2A435BEA001D4F75 /* AppDelegate.swift */,
+				D1620CBD2A435BEA001D4F75 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D1620CD12A435E2C001D4F75 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D1620CBF2A435BEA001D4F75 /* ViewController.swift */,
+				D1620CC12A435BEA001D4F75 /* Main.storyboard */,
+				D1620CC62A435BEB001D4F75 /* LaunchScreen.storyboard */,
+			);
+			path = Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,7 +313,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6XZKA4BJLF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Homework12 (App pomidor)/Info.plist";
+				INFOPLIST_FILE = "Homework12 (App pomidor)/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -317,7 +341,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 6XZKA4BJLF;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Homework12 (App pomidor)/Info.plist";
+				INFOPLIST_FILE = "Homework12 (App pomidor)/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
