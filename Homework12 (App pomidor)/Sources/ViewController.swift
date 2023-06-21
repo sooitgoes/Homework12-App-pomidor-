@@ -14,18 +14,17 @@ class ViewController: UIViewController {
     private lazy var timer: UILabel = {
         let timer = UILabel()
         timer.text = "25:00"
-        timer.font = .systemFont(ofSize: 84, weight: .bold)
+        timer.font = .systemFont(ofSize: 70, weight: .light)
         timer.textAlignment = .center
-        timer.textColor = .black
+        timer.textColor = .white
         timer.translatesAutoresizingMaskIntoConstraints = false
         return timer
     }()
 
     private lazy var playOrPause: UIButton = {
-        let playOrPause = UIButton(type: .system)
+        let playOrPause = UIButton()
         let playIcon = UIImage(named: "playRed")
         playOrPause.setImage(playIcon, for: .normal)
-        playOrPause.titleLabel?.font = .systemFont(ofSize: 20, weight: .heavy)
         playOrPause.translatesAutoresizingMaskIntoConstraints = false
         return playOrPause
     }()
@@ -47,11 +46,19 @@ class ViewController: UIViewController {
     }
 
     private func setupHierarchy() {
-
+        view.addSubview(timer)
+        view.addSubview(playOrPause)
     }
 
     private func setupLayout() {
+        NSLayoutConstraint.activate([
+            timer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            timer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
+            playOrPause.topAnchor.constraint(equalTo: timer.bottomAnchor, constant: 40),
+            playOrPause.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            playOrPause.widthAnchor.constraint(equalToConstant: 50)
+        ])
     }
 
     // MARK: - Actions
