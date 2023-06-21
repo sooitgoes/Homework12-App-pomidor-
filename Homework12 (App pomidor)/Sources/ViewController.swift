@@ -63,6 +63,23 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Actions
+    @objc private func buttonPressed() {
+        switch (isStart, isWork) {
+        case (false, true):
+            timer = .scheduledTimer(timeInterval: 1, target: self, selector: <#T##Selector#>, userInfo: nil, repeats: true)
+            playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
+            isStart = true
+        case (false, false):
+            timer = .scheduledTimer(timeInterval: 1, target: self, selector: <#T##Selector#>, userInfo: nil, repeats: true)
+            playOrPause.setImage(UIImage(named: "pauseRed"), for: .normal)
+            isStart = true
+        default:
+            timer.invalidate()
+            playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
+            isStart = false
+        }
+
+    }
 
 
 }
