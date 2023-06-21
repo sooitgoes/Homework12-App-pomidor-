@@ -9,16 +9,20 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    // MARK: - UI Elements
+    private var timer = Timer()
+    private var durationTimer = 25
+    private var isWork = true
+    private var isStart = false
 
-    private lazy var timer: UILabel = {
-        let timer = UILabel()
-        timer.text = "25:00"
-        timer.font = .systemFont(ofSize: 70, weight: .light)
-        timer.textAlignment = .center
-        timer.textColor = .white
-        timer.translatesAutoresizingMaskIntoConstraints = false
-        return timer
+    // MARK: - UI Elements
+    private lazy var timerLabel: UILabel = {
+        let timerLabel = UILabel()
+        timerLabel.text = "\(durationTimer):00"
+        timerLabel.font = .systemFont(ofSize: 70, weight: .light)
+        timerLabel.textAlignment = .center
+        timerLabel.textColor = .white
+        timerLabel.translatesAutoresizingMaskIntoConstraints = false
+        return timerLabel
     }()
 
     private lazy var playOrPause: UIButton = {
@@ -28,9 +32,6 @@ class ViewController: UIViewController {
         playOrPause.translatesAutoresizingMaskIntoConstraints = false
         return playOrPause
     }()
-
-
-
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -46,16 +47,16 @@ class ViewController: UIViewController {
     }
 
     private func setupHierarchy() {
-        view.addSubview(timer)
+        view.addSubview(timerLabel)
         view.addSubview(playOrPause)
     }
 
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            timer.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            timer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            timerLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            timerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-            playOrPause.topAnchor.constraint(equalTo: timer.bottomAnchor, constant: 40),
+            playOrPause.topAnchor.constraint(equalTo: timerLabel.bottomAnchor, constant: 40),
             playOrPause.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             playOrPause.widthAnchor.constraint(equalToConstant: 50)
         ])
