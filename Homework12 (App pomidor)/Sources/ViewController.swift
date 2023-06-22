@@ -11,10 +11,12 @@ class ViewController: UIViewController {
 
     private var timer = Timer()
     private var durationTimer = 25
-    private var isWork = true
-    private var isStart = false
+    private var isWorkMode = true
+    private var isTimerStart = false
     private let backProgressLayer = CAShapeLayer()
     private let foreProgressLayer = CAShapeLayer()
+    private var isAnimationStar = false
+    private let animation = CABasicAnimation(keyPath: "strokeEnd")
 
     // MARK: - UI Elements
     private lazy var timerLabel: UILabel = {
@@ -74,21 +76,21 @@ class ViewController: UIViewController {
 
     // MARK: - Actions
     @objc private func buttonPressed() {
-        switch (isStart, isWork) {
+        switch (isTimerStart, isWorkMode) {
         case (false, true):
             timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(workTimerAction), userInfo: nil, repeats: true)
             playOrPause.setImage(UIImage(named: "pauseRed"), for: .normal)
-            isStart = true
+            isTimerStart = true
         case (false, false):
             timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(restTimerAction), userInfo: nil, repeats: true)
             playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
-            isStart = true
+            isTimerStart = true
         default:
             timer.invalidate()
-            isWork == true
+            isWorkMode == true
             ? playOrPause.setImage(UIImage(named: "playRed"), for: .normal)
             : playOrPause.setImage(UIImage(named: "playGreen"), for: .normal)
-            isStart = false
+            isTimerStart = false
         }
     }
 
@@ -103,8 +105,8 @@ class ViewController: UIViewController {
             timerLabel.text = "\(durationTimer):00"
             timerLabel.textColor = .systemGreen
             playOrPause.setImage(UIImage(named: "playGreen"), for: .normal)
-            isStart = false
-            isWork = false
+            isTimerStart = false
+            isWorkMode = false
         }
     }
 
@@ -118,8 +120,8 @@ class ViewController: UIViewController {
             timerLabel.text = "\(durationTimer):00"
             timerLabel.textColor = .systemRed
             playOrPause.setImage(UIImage(named: "playRed"), for: .normal)
-            isStart = false
-            isWork = true
+            isTimerStart = false
+            isWorkMode = true
         }
     }
 
@@ -135,11 +137,11 @@ class ViewController: UIViewController {
     }
 
     // Прорисовка переднего слоя прогресс бара
-    func drawForeLayer() {
+    private func drawForeLayer() {
         let center = CGPoint(x: view.frame.midX, y: view.frame.midY)
 
         foreProgressLayer.path = UIBezierPath(arcCenter: center, radius: 150, startAngle: -90.degreesToRadians, endAngle: 270.degreesToRadians, clockwise: true).cgPath
-        if isWork == true {
+        if isWorkMode == true {
             foreProgressLayer.strokeColor = UIColor.red.cgColor
         } else {
             foreProgressLayer.strokeColor = UIColor.green.cgColor
@@ -147,6 +149,22 @@ class ViewController: UIViewController {
         foreProgressLayer.fillColor = UIColor.clear.cgColor
         foreProgressLayer.lineWidth = 5
         view.layer.addSublayer(foreProgressLayer)
+    }
+
+    private func startAnimation() {
+        foreProgressLayer.speed = 1.0
+        foreProgressLayer.timeOffset = 0.0
+        foreProgressLayer.beginTime = 0.0
+        foreProgressLayer.strokeEnd = 0.0
+        animation.keyPath = "strokeEnd"
+        animation.toValue = 1
+        animation.fromValue = 0
+        animation.duration = CFTimeInterval(durationTimer)
+        animation.isRemovedOnCompletion = false
+        animation.isAdditive = true
+        animation.fillMode = CAMediaTimingFillMode.forwards
+        foreProgressLayer.add(animation, forKey: "strokeEnd")
+        isAnimationStar = true
     }
 }
 
