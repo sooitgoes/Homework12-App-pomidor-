@@ -166,5 +166,11 @@ class ViewController: UIViewController {
         foreProgressLayer.add(animation, forKey: "strokeEnd")
         isAnimationStar = true
     }
+
+   private func pauseAnimation() {
+        let pausedTime = foreProgressLayer.convertTime(CACurrentMediaTime(), from: nil)
+        foreProgressLayer.speed = 0.0
+        foreProgressLayer.timeOffset = pausedTime
+    }
 }
 
