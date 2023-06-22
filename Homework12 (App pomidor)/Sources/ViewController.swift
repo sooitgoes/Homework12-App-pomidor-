@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     private var isWork = true
     private var isStart = false
     private let backProgressLayer = CAShapeLayer()
+    private let foreProgressLayer = CAShapeLayer()
 
     // MARK: - UI Elements
     private lazy var timerLabel: UILabel = {
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         drawBackLayer()
+        drawForeLayer()
     }
 
     // MARK: - Setups
@@ -130,6 +132,21 @@ class ViewController: UIViewController {
         backProgressLayer.fillColor = UIColor.clear.cgColor
         backProgressLayer.lineWidth = 5
         view.layer.addSublayer(backProgressLayer)
+    }
+
+    // Прорисовка переднего слоя прогресс бара
+    func drawForeLayer() {
+        let center = CGPoint(x: view.frame.midX, y: view.frame.midY)
+
+        foreProgressLayer.path = UIBezierPath(arcCenter: center, radius: 150, startAngle: -90.degreesToRadians, endAngle: 270.degreesToRadians, clockwise: true).cgPath
+        if isWork == true {
+            foreProgressLayer.strokeColor = UIColor.red.cgColor
+        } else {
+            foreProgressLayer.strokeColor = UIColor.green.cgColor
+        }
+        foreProgressLayer.fillColor = UIColor.clear.cgColor
+        foreProgressLayer.lineWidth = 5
+        view.layer.addSublayer(foreProgressLayer)
     }
 }
 
