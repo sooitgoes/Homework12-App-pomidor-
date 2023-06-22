@@ -78,14 +78,17 @@ class ViewController: UIViewController {
     @objc private func buttonPressed() {
         switch (isTimerStart, isWorkMode) {
         case (false, true):
+            startResumeAnimation()
             timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(workTimerAction), userInfo: nil, repeats: true)
             playOrPause.setImage(UIImage(named: "pauseRed"), for: .normal)
             isTimerStart = true
         case (false, false):
+            startResumeAnimation()
             timer = .scheduledTimer(timeInterval: 1, target: self, selector: #selector(restTimerAction), userInfo: nil, repeats: true)
             playOrPause.setImage(UIImage(named: "pauseGreen"), for: .normal)
             isTimerStart = true
         default:
+            pauseAnimation()
             timer.invalidate()
             isWorkMode == true
             ? playOrPause.setImage(UIImage(named: "playRed"), for: .normal)
@@ -100,6 +103,7 @@ class ViewController: UIViewController {
         timerLabel.text = "\(durationTimer):00"
 
         if durationTimer == 0 {
+            stopAnimation()
             timer.invalidate()
             durationTimer = 10
             timerLabel.text = "\(durationTimer):00"
@@ -115,6 +119,7 @@ class ViewController: UIViewController {
         timerLabel.text = "\(durationTimer):00"
 
         if durationTimer == 0 {
+            stopAnimation()
             timer.invalidate()
             durationTimer = 25
             timerLabel.text = "\(durationTimer):00"
@@ -151,6 +156,15 @@ class ViewController: UIViewController {
         view.layer.addSublayer(foreProgressLayer)
     }
 
+    // Анимация
+    private func startResumeAnimation() {
+        if !isAnimationStar {
+            startAnimation()
+        } else {
+            resumeAnimation()
+        }
+    }
+
     private func startAnimation() {
         foreProgressLayer.speed = 1.0
         foreProgressLayer.timeOffset = 0.0
@@ -171,6 +185,24 @@ class ViewController: UIViewController {
         let pausedTime = foreProgressLayer.convertTime(CACurrentMediaTime(), from: nil)
         foreProgressLayer.speed = 0.0
         foreProgressLayer.timeOffset = pausedTime
+    }
+
+   private func resumeAnimation() {
+        let pausedTime = foreProgressLayer.timeOffset
+        foreProgressLayer.speed = 1.0
+        foreProgressLayer.timeOffset = 0.0
+        foreProgressLayer.beginTime = 0.0
+        let timeSincePaudes = foreProgressLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
+        foreProgressLayer.beginTime = timeSincePaudes
+    }
+
+    private func stopAnimation() {
+        foreProgressLayer.speed = 1.0
+        foreProgressLayer.timeOffset = 0.0
+        foreProgressLayer.beginTime = 0.0
+        foreProgressLayer.strokeEnd = 0.0
+        foreProgressLayer.removeAllAnimations()
+        isAnimationStar = false
     }
 }
 
