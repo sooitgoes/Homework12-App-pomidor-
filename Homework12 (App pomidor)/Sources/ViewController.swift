@@ -143,7 +143,7 @@ class ViewController: UIViewController {
 
     // Прорисовка переднего слоя прогресс бара
     private func drawForeLayer() {
-        let center = CGPoint(x: view.frame.midX, y: view.frame.midY)
+        let center = CGPoint(x: timerLabel.frame.midX, y: timerLabel.frame.midY)
 
         foreProgressLayer.path = UIBezierPath(arcCenter: center, radius: 150, startAngle: -90.degreesToRadians, endAngle: 270.degreesToRadians, clockwise: true).cgPath
         if isWorkMode == true {
@@ -187,11 +187,11 @@ class ViewController: UIViewController {
         foreProgressLayer.timeOffset = pausedTime
     }
 
-   private func resumeAnimation() {
+    private func resumeAnimation() {
         let pausedTime = foreProgressLayer.timeOffset
         foreProgressLayer.speed = 1.0
         foreProgressLayer.timeOffset = 0.0
-        foreProgressLayer.beginTime = 0.0
+        foreProgressLayer.beginTime = -0.5
         let timeSincePaudes = foreProgressLayer.convertTime(CACurrentMediaTime(), from: nil) - pausedTime
         foreProgressLayer.beginTime = timeSincePaudes
     }
